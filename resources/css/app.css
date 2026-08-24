@@ -1,0 +1,391 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+@import './fonts.css';
+
+/* ========================================
+   DESIGN SYSTEM - Ifeanyi Nnadi Website
+   ======================================== */
+
+@layer base {
+    :root {
+        --color-navy: #1a2a3a;
+        --color-gold: #c9a94e;
+        --color-charcoal: #2d2d2d;
+        --color-warm-grey: #8a8a8a;
+        --color-white: #ffffff;
+    }
+
+    html {
+        font-family: 'Newreader Text', Georgia, serif;
+        @apply text-charcoal antialiased;
+    }
+
+    h1, h2, h3, h4, h5 {
+        font-family: 'Playfair Display', Georgia, serif;
+        @apply text-navy font-bold;
+    }
+
+    .heading-display {
+        font-family: 'Newreader Display', Georgia, serif;
+    }
+
+    .heading-caption {
+        font-family: 'Newreader Caption', Georgia, serif;
+    }
+
+    .body-text {
+        font-family: 'Newreader Text', Georgia, serif;
+    }
+
+    .container-custom {
+        @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+    }
+
+    .section-padding {
+        @apply py-16 md:py-20 lg:py-24;
+    }
+
+    .btn-primary {
+        @apply bg-gold text-white font-semibold px-6 py-3 rounded-lg 
+               hover:bg-opacity-90 transition-all duration-200 
+               focus:outline-none focus:ring-2 focus:ring-gold focus:ring-opacity-50;
+        font-family: 'Newreader Text', Georgia, serif;
+    }
+
+    .btn-outline {
+        @apply border-2 border-gold text-gold font-semibold px-6 py-3 rounded-lg
+               hover:bg-gold hover:text-white transition-all duration-200;
+        font-family: 'Newreader Text', Georgia, serif;
+    }
+
+    .btn-white-outline {
+        @apply border-2 border-white text-white font-semibold px-6 py-3 rounded-lg
+               hover:bg-white hover:text-navy transition-all duration-200;
+        font-family: 'Newreader Text', Georgia, serif;
+    }
+}
+
+.hero-exclusions-link {
+    font-family: 'Newsreader Text', Georgia, serif;
+    font-size: 8pt;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+/* Popup Animation */
+#popup1 {
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+#popup1:target {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+/* Responsive Popup Close Button */
+@media (max-width: 768px) {
+    .popup-close {
+        top: -3rem;
+        left: 50%;
+        transform: translateX(-50%);
+        color: white;
+    }
+}
+
+@media (min-width: 769px) {
+    .popup-close {
+        top: 0.5rem;
+        right: 1rem;
+        left: auto;
+        transform: none;
+        color: #333;
+    }
+}
+
+/* ========================================
+   NAVIGATION - Hover Animation
+   ======================================== */
+.nav-link {
+    position: relative;
+    display: block;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: #ffffff;
+    font-family: 'Newsreader Text', Georgia, serif;
+    font-size: 14px;
+    font-weight: 600;
+    transition: 0.5s;
+    z-index: 1;
+    padding: 10px 20px;
+    letter-spacing: 0.5px;
+}
+
+.nav-link::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-top: 2px solid #ffffff;
+    border-bottom: 2px solid #ffffff;
+    transform: scaleY(2);
+    opacity: 0;
+    transition: 0.3s;
+    pointer-events: none;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #ffffff;
+    transform: scale(0);
+    opacity: 0;
+    transition: 0.3s;
+    z-index: -1;
+    pointer-events: none;
+}
+
+.nav-link:hover {
+    color: #1a2a3a !important;
+}
+
+.nav-link:hover::before {
+    transform: scaleY(1);
+    opacity: 1;
+}
+
+.nav-link:hover::after {
+    transform: scaleY(1);
+    opacity: 1;
+}
+
+/* ========================================
+   STICKY NAVIGATION
+   ======================================== */
+#main-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    padding: 16px 24px;
+    background: transparent;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Scrolled state - Navy background with shadow */
+#main-nav.nav-scrolled {
+    background:  rgba(45, 45, 45, 0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
+    padding: 12px 24px;
+}
+
+/* Optional: Hide on scroll down, show on scroll up */
+#main-nav.nav-hidden {
+    transform: translateY(-100%);
+}
+
+
+
+/* When scrolled, adjust logo size */
+#main-nav.nav-scrolled .nav-logo-desktop {
+    height: 2.5rem; /* 40px - slightly smaller */
+}
+
+#main-nav.nav-scrolled .nav-logo-mobile {
+    height: 2rem; /* 32px - slightly smaller */
+}
+
+/* Add a subtle bottom border when scrolled */
+#main-nav.nav-scrolled {
+    border-bottom: 1px solid rgba(201, 169, 78, 0.15);
+}
+
+/* Mobile menu background when scrolled */
+#main-nav.nav-scrolled #mobile-menu {
+    background: rgba(26, 42, 58, 0.98);
+}
+
+/* Transition for logo */
+.nav-logo-desktop,
+.nav-logo-mobile {
+    transition: all 0.3s ease;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    #main-nav {
+        padding: 12px 16px;
+    }
+    
+    #main-nav.nav-scrolled {
+        padding: 10px 16px;
+    }
+}
+
+/* ========================================
+   FOOTER FLIP BUTTON
+   ======================================== */
+.btn-flip-footer {
+    opacity: 1;
+    outline: 0;
+    color: #fff;
+    line-height: 40px;
+    position: relative;
+    text-align: center;
+    letter-spacing: 1px;
+    display: inline-block;
+    text-decoration: none;
+    font-family: 'Newsreader Text', Georgia, serif;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 12px;
+    min-width: 160px;
+    cursor: pointer;
+}
+
+.btn-flip-footer:before {
+    top: 0;
+    left: 0;
+    opacity: 1;
+    color: #c9a94e;
+    display: block;
+    padding: 0 30px;
+    line-height: 40px;
+    transition: 0.5s;
+    position: relative;
+    background: transparent;
+    border: 2px solid #c9a94e;
+    content: attr(data-front);
+    transform: translateY(0) rotateX(0);
+    border-radius: 2px;
+}
+
+.btn-flip-footer:after {
+    top: 0;
+    left: 0;
+    opacity: 0;
+    width: 100%;
+    color: #1a2a3a;
+    display: block;
+    padding: 0 30px;
+    line-height: 40px;
+    transition: 0.5s;
+    position: absolute;
+    background: #c9a94e;
+    border: 2px solid #c9a94e;
+    content: attr(data-back);
+    transform: translateY(-50%) rotateX(90deg);
+    border-radius: 2px;
+}
+
+.btn-flip-footer:hover:after {
+    opacity: 1;
+    transform: translateY(0) rotateX(0);
+}
+
+.btn-flip-footer:hover:before {
+    opacity: 0;
+    transform: translateY(50%) rotateX(90deg);
+}
+
+/* ========================================
+   SOCIAL ICON HOVER - CSS Variables Version
+   ======================================== */
+
+#social-icons {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    gap: 8px;
+}
+
+#social-icons li {
+    list-style: none;
+    cursor: pointer;
+    width: 36px;
+    height: 36px;
+}
+
+#social-icons li a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    text-decoration: none;
+}
+
+#social-icons li a i {
+    font-size: 24px;
+    color: rgba(255, 255, 255, 0.25);
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    position: relative;
+    z-index: 2;
+}
+
+#social-icons li a::after {
+    content: var(--icon, '');
+    position: absolute;
+    font-family: "Font Awesome 6 Brands";
+    font-size: 24px;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Instagram */
+#social-icons li:nth-child(1) a {
+    --icon: "\f16d";
+}
+#social-icons li:nth-child(1) a::after {
+    background: linear-gradient(45deg, 
+        #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* WhatsApp */
+#social-icons li:nth-child(2) a {
+    --icon: "\f232";
+}
+#social-icons li:nth-child(2) a::after {
+    color: #25D366;
+}
+
+/* Twitter/X */
+#social-icons li:nth-child(3) a {
+    --icon: "\f099";
+}
+#social-icons li:nth-child(3) a::after {
+    color: #1DA1F2;
+}
+
+/* LinkedIn */
+#social-icons li:nth-child(4) a {
+    --icon: "\f0e1";
+}
+#social-icons li:nth-child(4) a::after {
+    color: #0A66C2;
+}
+
+#social-icons li:hover a i {
+    opacity: 0;
+    transform: translateY(-10px);
+}
+
+#social-icons li:hover a::after {
+    opacity: 1;
+    transform: translateY(0);
+}
