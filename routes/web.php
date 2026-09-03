@@ -6,6 +6,22 @@ Route::get('/', function () {
     return view('home');
 });
 
+Route::get('/about', function () {
+    return view('about');
+});
+
+Route::get('/advisory', function () {
+    return view('advisory');
+});
+
+Route::get('/talent-management', function () {
+    return view('talent');
+});
+
+Route::get('/contact', function () {
+    return view('contact');
+});
+
 // Serve fonts directly from public/fonts
 Route::get('/fonts/{path}', function ($path) {
     $file = public_path("fonts/{$path}");
