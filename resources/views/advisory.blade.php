@@ -554,13 +554,13 @@
                 Every strong move starts with <em>strategy.</em>
             </h2>
             <div class="ctas reveal">
-                <a class="btn btn-primary" href="#">Book a Strategy Session 
+                <a class="btn btn-primary" href="{{ url('/contact?inquiry=book-session#contact-form') }}">Book a Strategy Session 
                     <svg class="arrow" width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1">
                         <line x1="1" y1="7" x2="12" y2="7"/>
                         <polyline points="7,2 12,7 7,12"/>
                     </svg>
                 </a>
-                <a class="btn btn-ghost" href="#">Hire My Team 
+                <a class="btn btn-ghost" href="{{ url('/contact?inquiry=advisory#contact-form') }}">Hire My Team 
                     <svg class="arrow" width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1">
                         <line x1="1" y1="7" x2="12" y2="7"/>
                         <polyline points="7,2 12,7 7,12"/>

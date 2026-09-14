@@ -594,13 +594,13 @@
                 <div class="eyebrow">— For Talent</div>
                 <h3>For talent ready to grow with <em style="color: var(--bronze); font-style: italic;">structure.</em></h3>
                 <p>If you have the capability, voice, expertise, or public potential to build something meaningful, this platform helps you shape the narrative, strengthen your profile, and access higher-level opportunities.</p>
-                <a class="btn btn-primary" href="#">Apply for Representation <svg class="arrow" width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1"><line x1="1" y1="7" x2="12" y2="7"/><polyline points="7,2 12,7 7,12"/></svg></a>
+                <a class="btn btn-primary" href="{{ url('/contact?inquiry=talent-representation#contact-form') }}">Apply for Representation <svg class="arrow" width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1"><line x1="1" y1="7" x2="12" y2="7"/><polyline points="7,2 12,7 7,12"/></svg></a>
             </div>
             <div class="talent-panel reveal">
                 <div class="eyebrow">— For Brands</div>
                 <h3 style="color: var(--cream);">For brands seeking <em style="color: var(--bronze-soft); font-style: italic;">credible people</em> with real value.</h3>
                 <p>Brands increasingly need talent who can do more than attract attention. They need professionals and personalities with trust, relevance, clarity, and market fit. This platform helps connect brands with talent that can represent them with substance.</p>
-                <a class="btn btn-ghost on-ink" href="#">Hire Talent <svg class="arrow" width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1"><line x1="1" y1="7" x2="12" y2="7"/><polyline points="7,2 12,7 7,12"/></svg></a>
+                <a class="btn btn-ghost on-ink" href="{{ url('/contact?inquiry=hire-talent#contact-form') }}">Hire Talent <svg class="arrow" width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1"><line x1="1" y1="7" x2="12" y2="7"/><polyline points="7,2 12,7 7,12"/></svg></a>
             </div>
         </div>
     </section>
@@ -669,13 +669,13 @@ APPROACH
                 Built for people with <em>more to become.</em>
             </h2>
             <div class="ctas reveal">
-                <a class="btn btn-primary" href="#">Apply for Representation 
+                <a class="btn btn-primary" href="{{ url('/contact?inquiry=talent-representation#contact-form') }}">Apply for Representation 
                     <svg class="arrow" width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1">
                         <line x1="1" y1="7" x2="12" y2="7"/>
                         <polyline points="7,2 12,7 7,12"/>
                     </svg>
                 </a>
-                <a class="btn btn-ghost" href="#">Hire Talent 
+                <a class="btn btn-ghost" href="{{ url('/contact?inquiry=hire-talent#contact-form') }}">Hire Talent 
                     <svg class="arrow" width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1">
                         <line x1="1" y1="7" x2="12" y2="7"/>
                         <polyline points="7,2 12,7 7,12"/>

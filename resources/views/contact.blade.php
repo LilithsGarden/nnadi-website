@@ -37,6 +37,7 @@
 
         /* ---------- Reset & base ---------- */
         *, *::before, *::after { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
         html, body { margin: 0; padding: 0; }
         body {
             font-family: var(--font-body);
@@ -215,6 +216,7 @@
             grid-template-columns: 1fr 1fr;
             gap: 30px;
             margin-top: 40px;
+            scroll-margin-top: 120px; /* keep form below fixed nav when scrolled to */
         }
         .field { display: block; }
         .field label {
@@ -419,27 +421,27 @@
     <!-- ========================================
     CONTACT FORM
     ======================================== -->
-    <section class="section">
-        <div class="wrap">
-            <div class="twocol">
-                <div class="col-l reveal">
-                    <div class="idx">01 · How can we help</div>
-                    <h3>Choose an <em style="color: var(--bronze); font-style: italic;">inquiry type.</em></h3>
-                    <p style="margin-top: 20px;">
-                        To make the conversation productive, please share a short overview of your need, your organisation or profile, the outcome you are seeking, and any timing or context that matters.
-                    </p>
-                    <div class="chips" style="margin-top: 30px;">
-                        <div class="chip active">Book a Strategy Session</div>
-                        <div class="chip">Advisory / Consulting</div>
-                        <div class="chip">Talent Representation</div>
-                        <div class="chip">Hire Talent</div>
-                        <div class="chip">Speaking Invitation</div>
-                        <div class="chip">Media / Press</div>
-                        <div class="chip">Partnership</div>
-                    </div>
+<section class="section">
+    <div class="wrap">
+        <div class="twocol">
+            <div class="col-l reveal">
+                <div class="idx">01 · How can we help</div>
+                <h3>Choose an <em style="color: var(--bronze); font-style: italic;">inquiry type.</em></h3>
+                <p style="margin-top: 20px;">
+                    To make the conversation productive, please share a short overview of your need, your organisation or profile, the outcome you are seeking, and any timing or context that matters.
+                </p>
+                <div class="chips" style="margin-top: 30px;">
+                    <div class="chip active" data-inquiry="Book a Strategy Session">Book a Strategy Session</div>
+                    <div class="chip" data-inquiry="Advisory / Consulting">Advisory / Consulting</div>
+                    <div class="chip" data-inquiry="Talent Representation">Talent Representation</div>
+                    <div class="chip" data-inquiry="Hire Talent">Hire Talent</div>
+                    <div class="chip" data-inquiry="Speaking Invitation">Speaking Invitation</div>
+                    <div class="chip" data-inquiry="Media / Press">Media / Press</div>
+                    <div class="chip" data-inquiry="Partnership">Partnership</div>
                 </div>
+            </div>
                 <div class="col-r reveal">
-                    <form class="form-grid" onsubmit="event.preventDefault(); alert('Thanks — this is a design prototype. Real form endpoint not wired.');">
+                    <form id="contact-form" class="form-grid" onsubmit="event.preventDefault(); alert('Thanks — this is a design prototype. Real form endpoint not wired.');">
                         <label class="field">
                             <label>Full name</label>
                             <input type="text" placeholder="Your full name" required />
@@ -465,7 +467,7 @@
                             <textarea placeholder="Share a short overview..." required></textarea>
                         </label>
                         <div class="field full" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
-                            <div class="mono" style="color: var(--muted);">INQUIRY TYPE — BOOK A STRATEGY SESSION</div>
+                            <div class="mono" id="inquiryTypeText" style="color: var(--muted);">INQUIRY TYPE — BOOK A STRATEGY SESSION</div>
                             <button type="submit" class="btn btn-primary">Send Inquiry <svg class="arrow" width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1"><line x1="1" y1="7" x2="12" y2="7"/><polyline points="7,2 12,7 7,12"/></svg></button>
                         </div>
                     </form>
@@ -568,7 +570,7 @@
                             this.classList.add('active');
                             
                             // Update the inquiry type text
-                            const inquiryText = document.querySelector('.mono');
+                            const inquiryText = document.getElementById('inquiryTypeText');
                             if (inquiryText) {
                                 inquiryText.textContent = 'INQUIRY TYPE — ' + this.textContent.trim().toUpperCase();
                             }
@@ -577,9 +579,45 @@
                 });
             }
 
+            // ========================================
+            // AUTO-SELECT CHIP FROM ?inquiry=... QUERY PARAM
+            // ========================================
+            function autoSelectFromUrl() {
+                const params = new URLSearchParams(window.location.search);
+                const inquiry = params.get('inquiry');
+                if (!inquiry) return;
+
+                const inquiryMap = {
+                    'book-session':          'Book a Strategy Session',
+                    'advisory':              'Advisory / Consulting',
+                    'talent-representation': 'Talent Representation',
+                    'hire-talent':           'Hire Talent',
+                    'speaking':              'Speaking Invitation',
+                    'media':                 'Media / Press',
+                    'partnership':           'Partnership'
+                };
+
+                const chipLabel = inquiryMap[inquiry];
+                if (!chipLabel) return;
+
+                const chips = document.querySelectorAll('.chips .chip');
+                chips.forEach(chip => {
+                    if (chip.textContent.trim() === chipLabel) {
+                        chips.forEach(c => c.classList.remove('active'));
+                        chip.classList.add('active');
+
+                        const inquiryText = document.getElementById('inquiryTypeText');
+                        if (inquiryText) {
+                            inquiryText.textContent = 'INQUIRY TYPE — ' + chipLabel.toUpperCase();
+                        }
+                    }
+                });
+            }
+
             document.addEventListener("DOMContentLoaded", () => {
                 initReveals();
                 initChips();
+                autoSelectFromUrl();
             });
         })();
 

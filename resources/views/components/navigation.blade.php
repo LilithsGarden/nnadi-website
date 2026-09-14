@@ -70,7 +70,7 @@
             </ul>
 
             <!-- Book a Strategy Session Button -->
-            <a href="#" class="btn-flip-nav" style="display: inline-block; position: relative; text-align: center; letter-spacing: 1px; text-decoration: none; font-family: 'Newsreader Text', Georgia, serif; text-transform: uppercase; font-weight: 600; font-size: 11px; min-width: 160px; cursor: pointer; z-index: 10; opacity: 1; color: #fff; line-height: 36px;" data-back="Start Here" data-front="Book a Session"></a>
+            <a href="{{ url('/contact#contact-form') }}" class="btn-flip-nav" style="display: inline-block; position: relative; text-align: center; letter-spacing: 1px; text-decoration: none; font-family: 'Newsreader Text', Georgia, serif; text-transform: uppercase; font-weight: 600; font-size: 11px; min-width: 160px; cursor: pointer; z-index: 10; opacity: 1; color: #fff; line-height: 36px;" data-back="Start Here" data-front="Book a Session"></a>
         </div>
 
         <!-- Mobile Menu Button -->
@@ -106,7 +106,7 @@
             @endif
         @endforeach
         <div style="margin-top: 16px; display: flex; justify-content: center;">
-            <a href="#" class="btn-flip-nav" style="display: inline-block; width: 100%; text-align: center; position: relative; letter-spacing: 1px; text-decoration: none; font-family: 'Newsreader Text', Georgia, serif; text-transform: uppercase; font-weight: 600; font-size: 12px; cursor: pointer; z-index: 10; opacity: 1; color: #fff; line-height: 40px;" data-back="Start Here" data-front="Book a Session"></a>
+            <a href="{{ url('/contact#contact-form') }}" class="btn-flip-nav" style="display: inline-block; width: 100%; text-align: center; position: relative; letter-spacing: 1px; text-decoration: none; font-family: 'Newsreader Text', Georgia, serif; text-transform: uppercase; font-weight: 600; font-size: 12px; cursor: pointer; z-index: 10; opacity: 1; color: #fff; line-height: 40px;" data-back="Start Here" data-front="Book a Session"></a>
         </div>
     </div>
 </nav>

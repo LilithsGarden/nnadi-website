@@ -6,6 +6,7 @@
     <title>Ifeanyi Nnadi — Business Leader · Reputation Strategist · Talent Manager</title>
         <!-- Favicon -->
     <link rel="icon" type="image/png" href="{{ asset('images/logo-icon.png') }}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     
     <style>
@@ -1126,12 +1127,92 @@
             </div>
 
             <div class="hero-buttons">
-                <a href="#" class="btn-flip" data-back="Let's Talk" data-front="Hire My Team"></a>
-                <a href="#" class="btn-flip btn-flip-outline" data-back="Connect Now" data-front="Join My Network"></a>
+                <a href="{{ url('/contact?inquiry=hire-talent#contact-form') }}" class="btn-flip" data-back="Let's Talk" data-front="Hire My Team"></a>
+                <a href="#" onclick="openJoinNetworkModal(); return false;" class="btn-flip btn-flip-outline" data-back="Connect Now" data-front="Join My Network"></a>
             </div>
         </div>
     </div>
 </section>
+
+<!-- Join Network Modal -->
+<div id="joinNetworkModal" style="display: none; position: fixed; inset: 0; z-index: 10000; background: rgba(15, 27, 61, 0.7); backdrop-filter: blur(8px); align-items: center; justify-content: center; padding: 20px;">
+    <div style="max-width: 520px; width: 100%; background: #FFFFFF; border-radius: 16px; padding: 40px; box-shadow: 0 40px 80px rgba(0, 0, 0, 0.3); position: relative; max-height: 90vh; overflow-y: auto;">
+        
+        <!-- Close Button -->
+        <button id="closeModalBtn" style="position: absolute; top: 16px; right: 20px; background: none; border: 0; font-size: 28px; color: #6B6558; cursor: pointer; transition: 0.3s; padding: 0; line-height: 1;">
+            &times;
+        </button>
+
+        <!-- Modal Header -->
+        <div style="text-align: center; margin-bottom: 30px;">
+            <div style="display: inline-block; background: #c9a94e; width: 60px; height: 3px; border-radius: 2px; margin-bottom: 16px;"></div>
+            <h2 style="font-family: 'Fraunces', 'Georgia', serif; font-weight: 300; font-size: 32px; color: #0F1B3D; margin: 0;">
+                Join My <em style="color: #B08D57; font-style: italic;">Network</em>
+            </h2>
+            <p style="color: #6B6558; font-size: 15px; margin-top: 10px; line-height: 1.5;">
+                Join a community of thinkers, doers, and builders. Get exclusive insights, updates, and opportunities.
+            </p>
+        </div>
+
+        <!-- Success Message (hidden by default) -->
+        <div id="successMessage" style="display: none; text-align: center; padding: 20px 0;">
+            <div style="font-size: 48px; margin-bottom: 16px;">✅</div>
+            <h3 style="font-family: 'Fraunces', 'Georgia', serif; font-weight: 300; font-size: 24px; color: #0F1B3D; margin: 0;">You're in!</h3>
+            <p style="color: #6B6558; margin-top: 10px; line-height: 1.5;">
+                Thank you for joining my network. A confirmation email has been sent to your inbox.
+            </p>
+        </div>
+
+        <!-- Form -->
+        <form id="joinNetworkForm" style="display: block;">
+            @csrf
+            <div style="margin-bottom: 20px;">
+                <label for="name" style="display: block; font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; color: #6B6558; font-weight: 600; margin-bottom: 6px;">
+                    Full Name <span style="color: #B08D57;">*</span>
+                </label>
+                <input type="text" id="name" name="name" required 
+                       style="width: 100%; padding: 14px 16px; border: 1px solid #e0ddd6; border-radius: 8px; font-size: 16px; font-family: 'Inter Tight', sans-serif; transition: 0.3s; outline: none; background: #F7F3EC; color: #0F1B3D;">
+                <span class="error-message" id="nameError" style="display: none; color: #e74c3c; font-size: 13px; margin-top: 4px;"></span>
+            </div>
+
+            <div style="margin-bottom: 20px;">
+                <label for="email" style="display: block; font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; color: #6B6558; font-weight: 600; margin-bottom: 6px;">
+                    Email Address <span style="color: #B08D57;">*</span>
+                </label>
+                <input type="email" id="email" name="email" required 
+                       style="width: 100%; padding: 14px 16px; border: 1px solid #e0ddd6; border-radius: 8px; font-size: 16px; font-family: 'Inter Tight', sans-serif; transition: 0.3s; outline: none; background: #F7F3EC; color: #0F1B3D;">
+                <span class="error-message" id="emailError" style="display: none; color: #e74c3c; font-size: 13px; margin-top: 4px;"></span>
+            </div>
+
+            <div style="margin-bottom: 24px;">
+                <label for="phone" style="display: block; font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; color: #6B6558; font-weight: 600; margin-bottom: 6px;">
+                    Phone Number <span style="color: #B08D57;">*</span>
+                </label>
+                <input type="tel" id="phone" name="phone" required 
+                       style="width: 100%; padding: 14px 16px; border: 1px solid #e0ddd6; border-radius: 8px; font-size: 16px; font-family: 'Inter Tight', sans-serif; transition: 0.3s; outline: none; background: #F7F3EC; color: #0F1B3D;">
+                <span class="error-message" id="phoneError" style="display: none; color: #e74c3c; font-size: 13px; margin-top: 4px;"></span>
+            </div>
+
+            <button type="submit" id="submitBtn" 
+                    style="width: 100%; padding: 16px; background: #0F1B3D; color: #FFFFFF; border: none; border-radius: 999px; font-size: 16px; font-weight: 600; font-family: 'Inter Tight', sans-serif; text-transform: uppercase; letter-spacing: 0.05em; cursor: pointer; transition: 0.3s; position: relative;">
+                <span id="btnText">Join Now</span>
+                <span id="btnSpinner" style="display: none;">
+                    <svg style="width: 24px; height: 24px; margin: 0 auto;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10" stroke-opacity="0.3"/>
+                        <path d="M12 2a10 10 0 0 1 10 10" stroke="currentColor">
+                            <animateTransform attributeName="transform" type="rotate" from="0 12 12" to="360 12 12" dur="1s" repeatCount="indefinite"/>
+                        </path>
+                    </svg>
+                </span>
+            </button>
+        </form>
+
+        <!-- Footer note -->
+        <p style="text-align: center; margin-top: 16px; font-size: 12px; color: #8a8a8a;">
+            By joining, you agree to receive occasional emails from Ifeanyi Nnadi.
+        </p>
+    </div>
+</div>
 
     <!-- ========================================
     POSITIONING
@@ -1195,25 +1276,25 @@
                     <div class="pillar-num">— 01</div>
                     <h3>Executive<br/>Advisory</h3>
                     <p>Advising executives and leadership teams on brand positioning, reputation strategy, executive communications, and commercial partnerships that unlock measurable business results.</p>
-                    <a class="learn" href="#">Explore <svg class="arrow" width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1"><line x1="1" y1="7" x2="12" y2="7"/><polyline points="7,2 12,7 7,12"/></svg></a>
+                    <a class="learn" href="{{ url('/contact?inquiry=advisory#contact-form') }}">Explore <svg class="arrow" width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1"><line x1="1" y1="7" x2="12" y2="7"/><polyline points="7,2 12,7 7,12"/></svg></a>
                 </div>
                 <div class="pillar">
                     <div class="pillar-num">— 02</div>
                     <h3>Talent<br/>Management</h3>
                     <p>Representing Africa's next generation of influential professionals, creators, speakers, athletes, hospitality leaders, and public figures — before the world fully discovers them.</p>
-                    <a class="learn" href="#">Explore <svg class="arrow" width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1"><line x1="1" y1="7" x2="12" y2="7"/><polyline points="7,2 12,7 7,12"/></svg></a>
+                    <a class="learn" href="{{ url('/contact?inquiry=talent-representation#contact-form') }}">Explore <svg class="arrow" width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1"><line x1="1" y1="7" x2="12" y2="7"/><polyline points="7,2 12,7 7,12"/></svg></a>
                 </div>
                 <div class="pillar">
                     <div class="pillar-num">— 03</div>
                     <h3>Corporate<br/>Consulting</h3>
                     <p>Helping companies strengthen communications, grow market presence, improve stakeholder trust, and drive brand-led commercial performance across key sectors.</p>
-                    <a class="learn" href="#">Explore <svg class="arrow" width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1"><line x1="1" y1="7" x2="12" y2="7"/><polyline points="7,2 12,7 7,12"/></svg></a>
+                    <a class="learn" href="{{ url('/contact?inquiry=advisory#contact-form') }}">Explore <svg class="arrow" width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1"><line x1="1" y1="7" x2="12" y2="7"/><polyline points="7,2 12,7 7,12"/></svg></a>
                 </div>
                 <div class="pillar">
                     <div class="pillar-num">— 04</div>
                     <h3>Speaking</h3>
                     <p>Delivering sharp, relevant, and commercially grounded insights for conferences, universities, leadership summits, hospitality forums, and brand events.</p>
-                    <a class="learn" href="#">Explore <svg class="arrow" width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1"><line x1="1" y1="7" x2="12" y2="7"/><polyline points="7,2 12,7 7,12"/></svg></a>
+                    <a class="learn" href="{{ url('/contact?inquiry=speaking#contact-form') }}">Explore <svg class="arrow" width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1"><line x1="1" y1="7" x2="12" y2="7"/><polyline points="7,2 12,7 7,12"/></svg></a>
                 </div>
             </div>
         </div>
@@ -1332,11 +1413,11 @@
                     From personal branding and media positioning to endorsements, speaking opportunities, and international exposure, the goal is simple: help outstanding people become impossible to ignore.
                 </p>
                 <div class="flex flex-wrap gap-3 mt-8">
-                    <a class="btn btn-primary inline-flex items-center gap-3 px-6 py-4 rounded-full bg-ink text-cream border border-ink hover:bg-bronze hover:border-bronze transition-all duration-200 text-sm uppercase tracking-wide" href="#">
+                    <a class="btn btn-primary inline-flex items-center gap-3 px-6 py-4 rounded-full bg-ink text-cream border border-ink hover:bg-bronze hover:border-bronze transition-all duration-200 text-sm uppercase tracking-wide" href="{{ url('/contact?inquiry=hire-talent#contact-form') }}">
                         Hire Talent 
                         <svg class="arrow w-3.5 h-3.5 transition-transform duration-300" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1"><line x1="1" y1="7" x2="12" y2="7"/><polyline points="7,2 12,7 7,12"/></svg>
                     </a>
-                    <a class="btn btn-ghost inline-flex items-center gap-3 px-6 py-4 rounded-full border border-rule-strong text-ink hover:bg-ink hover:text-cream transition-all duration-200 text-sm uppercase tracking-wide" href="#">
+                    <a class="btn btn-ghost inline-flex items-center gap-3 px-6 py-4 rounded-full border border-rule-strong text-ink hover:bg-ink hover:text-cream transition-all duration-200 text-sm uppercase tracking-wide" href="{{ url('/contact?inquiry=talent-representation#contact-form') }}">
                         Apply for Representation 
                         <svg class="arrow w-3.5 h-3.5 transition-transform duration-300" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1"><line x1="1" y1="7" x2="12" y2="7"/><polyline points="7,2 12,7 7,12"/></svg>
                     </a>
@@ -1363,8 +1444,8 @@
             <div class="eyebrow reveal" style="justify-content: center; display: inline-flex;">— the next move</div>
             <h2 class="display reveal" style="margin-top: 30px;" data-split>Let's build what people will remember.</h2>
             <div class="ctas reveal">
-                <a class="btn btn-primary" href="#">Book a Strategy Session <svg class="arrow" width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1"><line x1="1" y1="7" x2="12" y2="7"/><polyline points="7,2 12,7 7,12"/></svg></a>
-                <a class="btn btn-ghost" href="#">Hire My Team <svg class="arrow" width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1"><line x1="1" y1="7" x2="12" y2="7"/><polyline points="7,2 12,7 7,12"/></svg></a>
+                <a class="btn btn-primary" href="{{ url('/contact?inquiry=book-session#contact-form') }}">Book a Strategy Session <svg class="arrow" width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1"><line x1="1" y1="7" x2="12" y2="7"/><polyline points="7,2 12,7 7,12"/></svg></a>
+                <a class="btn btn-ghost" href="{{ url('/contact?inquiry=hire-talent#contact-form') }}">Hire My Team <svg class="arrow" width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1"><line x1="1" y1="7" x2="12" y2="7"/><polyline points="7,2 12,7 7,12"/></svg></a>
             </div>
         </div>
     </section>
@@ -1591,6 +1672,133 @@
 
             handleScroll();
         });
+
+        // ========================================
+        // JOIN NETWORK MODAL
+        // ========================================
+        document.addEventListener('DOMContentLoaded', function() {
+            const modal = document.getElementById('joinNetworkModal');
+            const closeBtn = document.getElementById('closeModalBtn');
+            const form = document.getElementById('joinNetworkForm');
+            const successMessage = document.getElementById('successMessage');
+            const submitBtn = document.getElementById('submitBtn');
+            const btnText = document.getElementById('btnText');
+            const btnSpinner = document.getElementById('btnSpinner');
+
+            // Open modal function (call this when "Join My Network" is clicked)
+            window.openJoinNetworkModal = function() {
+                modal.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+                // Reset form
+                form.style.display = 'block';
+                successMessage.style.display = 'none';
+                form.reset();
+                // Clear errors
+                document.querySelectorAll('.error-message').forEach(el => {
+                    el.style.display = 'none';
+                    el.textContent = '';
+                });
+                document.querySelectorAll('input').forEach(input => {
+                    input.style.borderColor = '#e0ddd6';
+                });
+            };
+
+            // Close modal
+            function closeModal() {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+
+            closeBtn.addEventListener('click', closeModal);
+
+            // Close on backdrop click
+            modal.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeModal();
+                }
+            });
+
+            // Close on ESC key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && modal.style.display === 'flex') {
+                    closeModal();
+                }
+            });
+
+            // Form submission
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                // Clear previous errors
+                document.querySelectorAll('.error-message').forEach(el => {
+                    el.style.display = 'none';
+                    el.textContent = '';
+                });
+                document.querySelectorAll('input').forEach(input => {
+                    input.style.borderColor = '#e0ddd6';
+                });
+
+                // Show loading state
+                btnText.style.display = 'none';
+                btnSpinner.style.display = 'block';
+                submitBtn.disabled = true;
+
+                // Get form data
+                const formData = new FormData(form);
+
+                // Send request
+                fetch('{{ route('join.network') }}', {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value,
+                        'Accept': 'application/json',
+                    },
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Show success
+                        form.style.display = 'none';
+                        successMessage.style.display = 'block';
+                    } else if (data.errors) {
+                        // Show validation errors
+                        Object.keys(data.errors).forEach(key => {
+                            const errorEl = document.getElementById(key + 'Error');
+                            const inputEl = document.getElementById(key);
+                            if (errorEl) {
+                                errorEl.textContent = data.errors[key][0];
+                                errorEl.style.display = 'block';
+                            }
+                            if (inputEl) {
+                                inputEl.style.borderColor = '#e74c3c';
+                            }
+                        });
+                    }
+                })
+                .catch(error => {
+                    alert('Something went wrong. Please try again.');
+                })
+                .finally(() => {
+                    // Hide loading state
+                    btnText.style.display = 'block';
+                    btnSpinner.style.display = 'none';
+                    submitBtn.disabled = false;
+                });
+            });
+
+            // Input focus styling
+            document.querySelectorAll('input').forEach(input => {
+                input.addEventListener('focus', function() {
+                    this.style.borderColor = '#c9a94e';
+                });
+                input.addEventListener('blur', function() {
+                    if (!this.style.borderColor || this.style.borderColor === '#c9a94e') {
+                        this.style.borderColor = '#e0ddd6';
+                    }
+                });
+            });
+        });
     </script>
 
     <style>
@@ -1626,6 +1834,16 @@
             color: color-mix(in oklab, var(--cream) 65%, transparent);
             margin-top: 18px;
         }
+            #joinNetworkModal input:focus {
+        border-color: #c9a94e !important;
+        box-shadow: 0 0 0 3px rgba(201, 169, 78, 0.1);
+    }
+    
+    #joinNetworkModal button[type="submit"]:hover {
+        background: #B08D57 !important;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 30px rgba(15, 27, 61, 0.2);
+    }
         @media (max-width: 900px) { 
             .impact { grid-template-columns: repeat(2, 1fr); } 
             .impact-cell { padding: 40px 20px !important; } 

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\JoinNetworkController;
 
 Route::get('/', function () {
     return view('home');
@@ -21,6 +22,8 @@ Route::get('/talent-management', function () {
 Route::get('/contact', function () {
     return view('contact');
 });
+
+Route::post('/join-network', [JoinNetworkController::class, 'store'])->name('join.network');
 
 // Serve fonts directly from public/fonts
 Route::get('/fonts/{path}', function ($path) {
